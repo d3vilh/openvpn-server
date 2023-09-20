@@ -15,6 +15,8 @@ cd openvpn-server
 docker compose up -d
 ```
 
+> **Note**: Before deploying container check [Configuration](https://github.com/d3vilh/openvpn-server#configuration) section for setting all the required variables up.
+
 ### Docker-compose.yml:
 ```yaml
 ---
