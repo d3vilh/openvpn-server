@@ -3,11 +3,6 @@ Fast a furious Docker container with OpenVPN Server living inside.
 
 ## Run this image
 
-### From the docker hub:
-```shell
-docker compose up -d
-```
-
 ### Run image using a `docker-compose.yml` file
 
 1. Clone the repo:
@@ -17,7 +12,7 @@ git clone https://github.com/d3vilh/openvpn-server
 2. Build the image:
 ```shell
 cd openvpn-server
-docker build --force-rm=true -t local/openvpn-server .
+docker compose up -d
 ```
 
 ### Docker-compose.yml:
@@ -73,7 +68,7 @@ iptables -A FORWARD -d 10.0.70.77 -s 10.0.70.88 -j DROP
 
 <img src="https://github.com/d3vilh/raspberry-gateway/raw/master/images/OVPN_VLANs.png" alt="OpenVPN Subnets" width="700" border="1" />
 
-Optionallt you can add [OpenVPN WEB UI](https://github.com/d3vilh/openvpn-ui) container for managing server via GUI:
+Optionally you can add [OpenVPN WEB UI](https://github.com/d3vilh/openvpn-ui) container for managing server via GUI:
 ```yaml
     openvpn-ui:
        container_name: openvpn-ui
@@ -90,7 +85,6 @@ Optionallt you can add [OpenVPN WEB UI](https://github.com/d3vilh/openvpn-ui) co
            - ./pki:/usr/share/easy-rsa/pki
        restart: always
 ```
-
 
 ### Run with Docker:
 ```shell
