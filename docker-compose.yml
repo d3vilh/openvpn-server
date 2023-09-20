@@ -1,0 +1,27 @@
+---
+version: "3.5"
+
+services:
+    openvpn:
+       container_name: openvpn
+       # If you want to build your own image, uncomment the following line and comment the image line
+       build: ./openvpn-docker
+       #image: d3vilh/openvpn-server:latest
+       privileged: true
+       ports: 
+          - "1194:1194/udp"
+       environment:
+           TRUST_SUB: "10.0.70.0/24"
+           GUEST_SUB: "10.0.71.0/24"  
+           HOME_SUB: "192.168.88.0/24"
+       volumes:
+           - ./pki:/etc/openvpn/pki
+           - ./clients:/etc/openvpn/clients
+           - ./config:/etc/openvpn/config
+           - ./staticclients:/etc/openvpn/staticclients
+           - ./log:/var/log/openvpn
+           - ./fw-rules.sh:/opt/app/fw-rules.sh
+       cap_add:
+           - NET_ADMIN
+       restart: always
+
