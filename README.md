@@ -8,6 +8,7 @@ Testing in progress.
 1. Clone the repo:
 ```shell
 git clone https://github.com/d3vilh/openvpn-server
+```
 2. Build the image:
 ```shell
 cd openvpn-server
