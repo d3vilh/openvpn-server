@@ -1,9 +1,6 @@
 # d3vilh/openvpn-server
 Fast a furious Docker container with OpenVPN Server living inside.
 
-Testing in progress.
-
-
 ## Run this image
 
 ### From the docker hub:
