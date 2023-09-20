@@ -3,6 +3,17 @@ Fast a furious Docker container with OpenVPN Server living inside.
 
 Testing in progress.
 
+## Build this image
+
+1. Clone the repo:
+```shell
+git clone https://github.com/d3vilh/openvpn-server
+2. Build the image:
+```shell
+cd openvpn-server
+docker-compose up -d
+```
+
 ### Run this image using a `docker-compose.yml` file
 
 ```yaml
