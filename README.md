@@ -3,7 +3,15 @@ Fast a furious Docker container with OpenVPN Server living inside.
 
 Testing in progress.
 
-## Build this image
+
+## Run this image
+
+### From the docker hub:
+```shell
+docker compose up -d
+```
+
+### Run image using a `docker-compose.yml` file
 
 1. Clone the repo:
 ```shell
@@ -12,11 +20,10 @@ git clone https://github.com/d3vilh/openvpn-server
 2. Build the image:
 ```shell
 cd openvpn-server
-docker-compose up -d
+docker build --force-rm=true -t local/openvpn-server .
 ```
 
-### Run this image using a `docker-compose.yml` file
-
+### Docker-compose.yml:
 ```yaml
 ---
 version: "3.5"
@@ -43,6 +50,7 @@ services:
            - NET_ADMIN
        restart: always
 ``` 
+
 **Where:** 
 * `TRUST_SUB` is Trusted subnet, from which OpenVPN server will assign IPs to trusted clients (default subnet for all clients)
 * `GUEST_SUB` is Gusets subnet for clients with internet access only
@@ -86,11 +94,11 @@ Optionallt you can add [OpenVPN WEB UI](https://github.com/d3vilh/openvpn-ui) co
        restart: always
 ```
 
-### Run image with docker:
+
+### Run with Docker:
 ```shell
-cd ~/openvpn-server/ && 
 docker run  --interactive --tty --rm \
-  --name=openvpn-server \
+  --name=openvpn \
   --cap-add=NET_ADMIN \
   -p 1194:1194/udp \
   -e TRUST_SUB=10.0.70.0/24 \
@@ -118,8 +126,14 @@ docker run \
 ```
 
 ### Build image form scratch:
+1. Clone the repo:
 ```shell
-docker build --force-rm=true -t local/openvpn-server .
+git clone https://github.com/d3vilh/openvpn-server
+```
+2. Build the image:
+```shell
+cd openvpn-server
+docker build --force-rm=true -t d3vilh/openvpn-server .
 ```
 
 ### OpenVPN Server Pstree structure
@@ -170,8 +184,6 @@ All the Server and Client configuration located in mounted Docker volume and can
 |-- staticclients //Directory where stored all the satic clients configuration
 ```
 
-Most of documentation can be found in the [main README.md](https://github.com/d3vilh/raspberry-gateway) file, if you want to run it without anything else you'll have to edit the [dns-configuration](https://github.com/d3vilh/raspberry-gateway/blob/master/openvpn-server/config/server.conf#L20) (which currently points to the PiHole DNS Server) and
-if you don't want to use a custom dns-resolve at all you may also want to comment out [this line](https://github.com/d3vilh/raspberry-gateway/blob/master/openvpn-server/config/server.conf#L39).
 
 ## Configuration
 
@@ -205,7 +217,7 @@ You can update all these parameters later with OpenVPN UI on `Configuration > Ea
 
 This setup use `tun` mode, as the most compatible with wide range of devices, for instance, does not work on MacOS(without special workarounds) and on Android (unless it is rooted).
 
-The topology used is `subnet`, for the same reasons. p2p, for instance, does not work on Windows.
+The topology used is `subnet`, for the same reasons. `p2p`, for instance, does not work on Windows.
 
 The server config [specifies](https://github.com/d3vilh/openvpn-aws/blob/master/openvpn/config/server.conf#L34) `push redirect-gateway def1 bypass-dhcp`, meaning that after establishing the VPN connection, all traffic will go through the VPN. This might cause problems if you use local DNS recursors which are not directly reachable, since you will try to reach them through the VPN and they might not answer to you. If that happens, use public DNS resolvers like those of OpenDNS (`208.67.222.222` and `208.67.220.220`) or Google (`8.8.4.4` and `8.8.8.8`).
 

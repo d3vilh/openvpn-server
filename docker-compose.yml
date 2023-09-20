@@ -4,9 +4,9 @@ version: "3.5"
 services:
     openvpn:
        container_name: openvpn
-       # If you want to build your own image, uncomment the following line and comment the image line
-       build: .
-       #image: d3vilh/openvpn-server:latest
+       # If you want to build your own image with docker-compose, uncomment the next line, comment the "image:" line and run "docker-compose build" following by "docker-compose up -d"
+       # build: .
+       image: d3vilh/openvpn-server:latest
        privileged: true
        ports: 
           - "1194:1194/udp"
