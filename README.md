@@ -88,6 +88,8 @@ Optionally you can add [OpenVPN WEB UI](https://github.com/d3vilh/openvpn-ui) co
        restart: always
 ```
 
+Check attached `docker-compose-openvpnui.yml` file for openvpn-server & openvpn-ui tandem configuration.
+
 ### Run with Docker:
 ```shell
 docker run  --interactive --tty --rm \
