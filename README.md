@@ -1,9 +1,9 @@
 # d3vilh/openvpn-server
 Fast Docker container with OpenVPN Server living inside.
 
-[![latest version](https://img.shields.io/github/v/release/d3vilh/openvpn-server?color=%2344cc11&label=LATEST%20RELEASE&style=for-the-badge&logo=Github)](https://github.com/d3vilh/openvpn-server/releases/latest)  [![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/d3vilh/openvpn-server/latest?style=for-the-badge&logo=docker&logoColor=white&label=DOCKER%20IMAGE&color=2344cc11)](https://hub.docker.com/r/d3vilh/openvpn-server) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/d3vilh/openvpn-server/latest?logo=Docker&color=2344cc11&label=Image%20size&style=for-the-badge&logoColor=white)
+[![latest version](https://img.shields.io/github/v/release/d3vilh/openvpn-server?color=%2344cc11&label=LATEST%20RELEASE&style=flat-square&logo=Github)](https://github.com/d3vilh/openvpn-server/releases/latest)  [![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/d3vilh/openvpn-server/latest?style=flat-square&logo=docker&logoColor=white&label=DOCKER%20IMAGE&color=2344cc11)](https://hub.docker.com/r/d3vilh/openvpn-server) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/d3vilh/openvpn-server/latest?logo=Docker&color=2344cc11&label=IMAGE%20SIZE&style=flat-square&logoColor=white)
 
-[![latest version](https://img.shields.io/github/v/release/d3vilh/openvpn-ui?color=%2344cc11&label=Openvpn-ui&style=for-the-badge&logo=Github)](https://github.com/d3vilh/openvpn-ui/releases/latest) [![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/d3vilh/openvpn-ui/latest?logo=docker&label=Openvpn-ui%20image&color=2344cc11&style=for-the-badge&logoColor=white)](https://hub.docker.com/r/d3vilh/openvpn-ui) 
+[![latest version](https://img.shields.io/github/v/release/d3vilh/openvpn-ui?color=%2344cc11&label=OpenVPN%20UI&style=flat-square&logo=Github)](https://github.com/d3vilh/openvpn-ui/releases/latest) [![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/d3vilh/openvpn-ui/latest?logo=docker&label=OpenVPN%20UI%20IMAGE&color=2344cc11&style=flat-square&logoColor=white)](https://hub.docker.com/r/d3vilh/openvpn-ui) 
 
 
 ## Run this image
@@ -22,7 +22,7 @@ docker compose up -d
 ```
 3. That's it. It seems you have your own openvpn-server running on your machine.
 
-For easy OpenVPN Server management install [OpenVPN-UI](https://github.com/d3vilh/openvpn-ui).
+For easy **OpenVPN Server** management install [**OpenVPN-UI**](https://github.com/d3vilh/openvpn-ui).
 
 ## Container deployment details
 
