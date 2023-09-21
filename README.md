@@ -1,5 +1,10 @@
 # d3vilh/openvpn-server
-Fast a furious Docker container with OpenVPN Server living inside.
+Fast Docker container with OpenVPN Server living inside.
+
+[![latest version](https://img.shields.io/github/v/release/d3vilh/openvpn-server?color=%2344cc11&label=LATEST%20RELEASE&style=for-the-badge&logo=Github)](https://github.com/d3vilh/openvpn-server/releases/latest)  [![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/d3vilh/openvpn-server/latest?style=for-the-badge&logo=docker&logoColor=white&label=DOCKER%20IMAGE&color=2344cc11)](https://hub.docker.com/r/d3vilh/openvpn-server) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/d3vilh/openvpn-server/latest?logo=Docker&color=2344cc11&label=Image%20size&style=for-the-badge&logoColor=white)
+
+[![latest version](https://img.shields.io/github/v/release/d3vilh/openvpn-ui?color=%2344cc11&label=Openvpn-ui&style=for-the-badge&logo=Github)](https://github.com/d3vilh/openvpn-ui/releases/latest) [![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/d3vilh/openvpn-ui/latest?logo=docker&label=Openvpn-ui%20image&color=2344cc11&style=for-the-badge&logoColor=white)](https://hub.docker.com/r/d3vilh/openvpn-ui) 
+
 
 ## Run this image
 
@@ -9,13 +14,17 @@ Fast a furious Docker container with OpenVPN Server living inside.
 ```shell
 git clone https://github.com/d3vilh/openvpn-server
 ```
+> **Note**: Before deploying container check [Configuration](https://github.com/d3vilh/openvpn-server#configuration) section for setting all the required variables up.
 2. Build the image:
 ```shell
 cd openvpn-server
 docker compose up -d
 ```
+3. That's it. It seems you have your own openvpn-server running on your machine.
 
-> **Note**: Before deploying container check [Configuration](https://github.com/d3vilh/openvpn-server#configuration) section for setting all the required variables up.
+4. For easy OpenVPN Server management install [OpenVPN-UI](https://github.com/d3vilh/openvpn-ui).
+
+## Container deployment details
 
 ### Docker-compose.yml:
 ```yaml
@@ -90,6 +99,28 @@ Optionally you can add [OpenVPN WEB UI](https://github.com/d3vilh/openvpn-ui) co
 
 Check attached `docker-compose-openvpnui.yml` file for openvpn-server & openvpn-ui tandem configuration.
 
+**Default EasyRSA** configuration can be changed in `~/openvpn-server/config/easy-rsa.vars` file:
+
+```shell
+set_var EASYRSA_DN           "org"
+set_var EASYRSA_REQ_COUNTRY  "UA"
+set_var EASYRSA_REQ_PROVINCE "KY"
+set_var EASYRSA_REQ_CITY     "Kyiv"
+set_var EASYRSA_REQ_ORG      "SweetHome"
+set_var EASYRSA_REQ_EMAIL    "sweet@home.net"
+set_var EASYRSA_REQ_OU       "MyOrganizationalUnit"
+set_var EASYRSA_REQ_CN       "server"
+set_var EASYRSA_KEY_SIZE     2048
+set_var EASYRSA_CA_EXPIRE    3650
+set_var EASYRSA_CERT_EXPIRE  825
+set_var EASYRSA_CERT_RENEW   30
+set_var EASYRSA_CRL_DAYS     180
+```
+
+In the process of installation these vars will be copied to container volume `/etc/openvpn/pki/vars` and used during all EasyRSA operations.
+You can update all these parameters later with OpenVPN UI on `Configuration > EasyRSA vars` page.
+
+
 ### Run with Docker:
 ```shell
 docker run  --interactive --tty --rm \
@@ -131,9 +162,24 @@ cd openvpn-server
 docker build --force-rm=true -t d3vilh/openvpn-server .
 ```
 
+## Configuration
+
+The volume container will be initialised  with included scripts to automatically generate everything you need on the first run:
+ - Diffie-Hellman parameters
+ - an EasyRSA CA key and certificate
+ - a new private key
+ - a self-certificate matching the private key for the OpenVPN server
+ - a TLS auth key from HMAC security
+
+This setup use `tun` mode, as the most compatible with wide range of devices, for instance, does not work on MacOS(without special workarounds) and on Android (unless it is rooted).
+
+The topology used is `subnet`, for the same reasons. `p2p`, for instance, does not work on Windows.
+
+The server config [specifies](https://github.com/d3vilh/openvpn-aws/blob/master/openvpn/config/server.conf#L34) `push redirect-gateway def1 bypass-dhcp`, meaning that after establishing the VPN connection, all traffic will go through the VPN. This might cause problems if you use local DNS recursors which are not directly reachable, since you will try to reach them through the VPN and they might not answer to you. If that happens, use public DNS resolvers like those of OpenDNS (`208.67.222.222` and `208.67.220.220`) or Google (`8.8.4.4` and `8.8.8.8`).
+
 ### OpenVPN Server Pstree structure
 
-All the Server and Client configuration located in mounted Docker volume and can be easely tuned. Full content [can be found here](https://github.com/d3vilh/raspberry-gateway/tree/master/openvpn-server) and below is the tree structure:
+All the Server and Client configuration located in mounted Docker volume and can be easely tuned. Here is the tree structure:
 
 ```shell
 |-- clients
@@ -178,43 +224,6 @@ All the Server and Client configuration located in mounted Docker volume and can
 |   |-- ta.key
 |-- staticclients //Directory where stored all the satic clients configuration
 ```
-
-
-## Configuration
-
-The volume container will be initialised  with included scripts to automatically generate everything you need on the first run:
- - Diffie-Hellman parameters
- - an EasyRSA CA key and certificate
- - a new private key
- - a self-certificate matching the private key for the OpenVPN server
- - a TLS auth key from HMAC security
-
-Default EasyRSA configuration whoch can be changed in `~/openvpn-server/config/easy-rsa.vars` file, is the following:
-
-```shell
-set_var EASYRSA_DN           "org"
-set_var EASYRSA_REQ_COUNTRY  "UA"
-set_var EASYRSA_REQ_PROVINCE "KY"
-set_var EASYRSA_REQ_CITY     "Kyiv"
-set_var EASYRSA_REQ_ORG      "SweetHome"
-set_var EASYRSA_REQ_EMAIL    "sweet@home.net"
-set_var EASYRSA_REQ_OU       "MyOrganizationalUnit"
-set_var EASYRSA_REQ_CN       "server"
-set_var EASYRSA_KEY_SIZE     2048
-set_var EASYRSA_CA_EXPIRE    3650
-set_var EASYRSA_CERT_EXPIRE  825
-set_var EASYRSA_CERT_RENEW   30
-set_var EASYRSA_CRL_DAYS     180
-```
-
-In the process of installation these vars will be copied to container volume `/etc/openvpn/pki/vars` and used during all EasyRSA operations.
-You can update all these parameters later with OpenVPN UI on `Configuration > EasyRSA vars` page.
-
-This setup use `tun` mode, as the most compatible with wide range of devices, for instance, does not work on MacOS(without special workarounds) and on Android (unless it is rooted).
-
-The topology used is `subnet`, for the same reasons. `p2p`, for instance, does not work on Windows.
-
-The server config [specifies](https://github.com/d3vilh/openvpn-aws/blob/master/openvpn/config/server.conf#L34) `push redirect-gateway def1 bypass-dhcp`, meaning that after establishing the VPN connection, all traffic will go through the VPN. This might cause problems if you use local DNS recursors which are not directly reachable, since you will try to reach them through the VPN and they might not answer to you. If that happens, use public DNS resolvers like those of OpenDNS (`208.67.222.222` and `208.67.220.220`) or Google (`8.8.4.4` and `8.8.8.8`).
 
 ### Generating .OVPN client profiles with [OpenVPN WEB UI](https://github.com/d3vilh/openvpn-ui)
 
