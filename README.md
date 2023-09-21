@@ -3,7 +3,7 @@ Fast Docker container with OpenVPN Server living inside.
 
 [![latest version](https://img.shields.io/github/v/release/d3vilh/openvpn-server?color=%2344cc11&label=LATEST%20RELEASE&style=flat-square&logo=Github)](https://github.com/d3vilh/openvpn-server/releases/latest)  [![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/d3vilh/openvpn-server/latest?style=flat-square&logo=docker&logoColor=white&label=DOCKER%20IMAGE&color=2344cc11)](https://hub.docker.com/r/d3vilh/openvpn-server) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/d3vilh/openvpn-server/latest?logo=Docker&color=2344cc11&label=IMAGE%20SIZE&style=flat-square&logoColor=white)
 
-[![latest version](https://img.shields.io/github/v/release/d3vilh/openvpn-ui?color=%2344cc11&label=OpenVPN%20UI&style=flat-square&logo=Github)](https://github.com/d3vilh/openvpn-ui/releases/latest) [![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/d3vilh/openvpn-ui/latest?logo=docker&label=OpenVPN%20UI%20IMAGE&color=2344cc11&style=flat-square&logoColor=white)](https://hub.docker.com/r/d3vilh/openvpn-ui) 
+[![latest version](https://img.shields.io/github/v/release/d3vilh/openvpn-ui?color=%2344cc11&label=OpenVPN%20UI&style=flat-square&logo=Github)](https://github.com/d3vilh/openvpn-ui) [![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/d3vilh/openvpn-ui/latest?logo=docker&label=OpenVPN%20UI%20IMAGE&color=2344cc11&style=flat-square&logoColor=white)](https://hub.docker.com/r/d3vilh/openvpn-ui) 
 
 
 ## Run this image
@@ -225,67 +225,91 @@ All the Server and Client configuration located in mounted Docker volume and can
 |-- staticclients //Directory where stored all the satic clients configuration
 ```
 
-### Generating .OVPN client profiles with [OpenVPN WEB UI](https://github.com/d3vilh/openvpn-ui)
+### Generating .OVPN client profiles with [OpenVPN UI](https://github.com/d3vilh/openvpn-ui)
 
-**OpenVPN WEB UI** can be accessed on own port (*e.g. http://localhost:8080 , change `localhost` to your EC2's Public or Private IPv4 address*), the default user and password is `admin/gagaZush` preconfigured in `config.yml` which you supposed to [set in](https://github.com/d3vilh/openvpn-aws/blob/master/example.config.yml#L18) `ovpnui_user` & `ovpnui_password` vars, just before the installation.
+You can access **OpenVPN UI** on it's own port (*e.g. `http://localhost:8080`, change `localhost` to your Public or Private IPv4 address*), the default user and password is `admin/gagaZush` which can be changed via Docker enviroment.
 
-Before client cert. generation you need to update the external IP address to your OpenVPN server in OVPN-UI GUI.
+You can update external client IP and port address anytime under `"Configuration > OpenVPN Client"` menu. 
 
-<img src="https://github.com/d3vilh/openvpn-aws/raw/master/images/OVPN_ext_serv_ip1.png" alt="Configuration > Settings" width="350" border="1" />
+For this go to `"Configuration > OpenVPN Client"`:
 
-And then update `"Server Address (external)"` field with your external Internet IP. Then go to `"Certificates"`, enter new VPN client name in the field at the page below and press `"Create"` to generate new Client certificate:
+<img src="https://github.com/d3vilh/openvpn-ui/blob/main/docs/images/OpenVPN-UI-ext_serv_ip1.png" alt="Configuration > Settings" width="350" border="1" />
 
-<img src="https://github.com/d3vilh/openvpn-aws/raw/master/images/OVPN_ext_serv_ip2.png" alt="Server Address" width="350" border="1" />  <img src="https://github.com/d3vilh/openvpn-aws/raw/master/images/OVPN_New_Client.png" alt="Create Certificate" width="350" border="1" />
+And then update `"Connection Address"` and `"Connection Port"` fields with your external Internet IP and Port. 
+
+To generate new Client Certificate go to `"Certificates"`, then press `"Create Certificate"` button, enter new VPN client name, complete all the rest fields and press `"Create"` to generate new Client certificate:
+
+<img src="https://github.com/d3vilh/openvpn-ui/blob/main/docs/images/OpenVPN-UI-ext_serv_ip2.png" alt="Server Address" width="350" border="1" />  <img src="https://github.com/d3vilh/openvpn-ui/blob/main/docs/images/OpenVPN-UI-New_Client.png" alt="Create Certificate" width="350" border="1" />
 
 To download .OVPN client configuration file, press on the `Client Name` you just created:
 
-<img src="https://github.com/d3vilh/openvpn-aws/raw/master/images/OVPN_New_Client_download.png" alt="download OVPN" width="350" border="1" />
-
-If you use NAT and different port for all the external connections on your network router, you may need to change server port in .OVPN file. For that, just open it in any text editor (emax?) and update `1194` port with the desired one in this line: `remote 178.248.232.12 1194 udp`.
-This line also can be [preconfigured in](https://github.com/d3vilh/openvpn-aws/raw/master/example.config.yml#L23) `config.yml` file in var `ovpn_remote`.
+<img src="https://github.com/d3vilh/openvpn-ui/blob/main/docs/images/OpenVPN-UI-New_Client_download.png" alt="download OVPN" width="350" border="1" />
 
 Install [Official OpenVPN client](https://openvpn.net/vpn-client/) to your client device.
 
 Deliver .OVPN profile to the client device and import it as a FILE, then connect with new profile to enjoy your free VPN:
 
-<img src="https://github.com/d3vilh/openvpn-aws/raw/master/images/OVPN_Palm_import.png" alt="PalmTX Import" width="350" border="1" /> <img src="https://github.com/d3vilh/openvpn-aws/raw/master/images/OVPN_Palm_connected.png" alt="PalmTX Connected" width="350" border="1" />
+<img src="https://github.com/d3vilh/openvpn-ui/blob/main/docs/images/OpenVPN-UI-Palm_import.png" alt="PalmTX Import" width="350" border="1" /> <img src="https://github.com/d3vilh/openvpn-ui/blob/main/docs/images/OpenVPN-UI-Palm_connected.png" alt="PalmTX Connected" width="350" border="1" />
+
+### Renew Certificates for client profiles
+
+To renew certificate, go to `"Certificates"` and press `"Renew"` button for the client you would like to renew certificate for:
+
+<img src="https://github.com/d3vilh/openvpn-ui/blob/main/docs/images/OpenVPN-UI-Cert-Renew.01.png" alt="Renew OpenVPN Certificate" width="600" border="1" />
+
+Right after this step new Certificate will be genrated and it will appear as new client profile with the same Client name. At this point both client profiles will have updated Certificate when you try to download it.
+
+Once you will deliver new client profile with renewed Certificate to you client, press `"Revoke"` button for old profile to revoke old Certificate, old client profile will be deleted from the list.
+
+If, for some reason you still would like to keep old certificate you have to `"Revoke"` new profile, old certificate will be rolled back and new profile will be deleted from the list.
+
+Renewal process will not affect active VPN connections, old client will be disconnected only after you revoke old certificate or certificate term of use will expire.
 
 ### Revoking .OVPN profiles
 
 If you would like to prevent client to use yor VPN connection, you have to revoke client certificate and restart the OpenVPN daemon.
-You can do it via OpenVPN WEB UI `"Certificates"` menue, by pressing Revoke red button:
+You can do it via OpenVPN UI `"Certificates"` menue, by pressing `"Revoke"`` amber button:
 
-<img src="https://github.com/d3vilh/openvpn-aws/raw/master/images/OpenVPN-UI-Revoke.png" alt="Revoke Certificate" width="600" border="1" />
+<img src="https://github.com/d3vilh/openvpn-ui/blob/main/docs/images/OpenVPN-UI-Revoke.png" alt="Revoke Certificate" width="600" border="1" />
 
-Revoked certificates won't kill active connections, you'll have to restart the service if you want the user to immediately disconnect. It can be done via Portainer or OpenVPN WEB UI from the same `"Certificates"` page, by pressing Restart red button:
+Certificate revoke won't kill active VPN connections, you'll have to restart the service if you want the user to immediately disconnect. It can be done from the same `"Certificates"` page, by pressing Restart red button:
 
-<img src="https://github.com/d3vilh/openvpn-aws/raw/master/images/OpenVPN-UI-Restart.png" alt="OpenVPN Restart" width="600" border="1" />
+<img src="https://github.com/d3vilh/openvpn-ui/blob/main/docs/images/OpenVPN-UI-Restart.png" alt="OpenVPN Restart" width="600" border="1" />
+
+You can do the same from the `"Maintenance"` page.
+
+After Revoking and Restarting the service, the client will be disconnected and will not be able to connect again with the same certificate. To delete the certificate from the server, you have to press `"Remove"` button.
 
 ### OpenVPN client subnets. Guest and Home users
 
-[OpenVPN-AWS'](https://github.com/d3vilh/openvpn-aws/) OpenVPN server uses `10.0.70.0/24` **"Trusted"** subnet for dynamic clients by default and all the clients connected by default will have full access to your AWS Private subnet, as well as external Internet access with EC2 Public IP.
-However you can be desired to share VPN access with your friends and restrict access to your AWS Private network for them (so they wont access OpenVPN-UI GUI or other services), but allow to use Internet connection with EC2 Public IP. This type of guest clients needs to live in special **"Guest users"** subnet - `10.0.71.0/24`:
+By default this [Openvpn-Server](https://github.com/d3vilh/openvpn-server) OpenVPN server uses option `server 10.0.70.0/24` as **"Trusted"** subnet to grab dynamic IPs for all your Clients which, by default will have full access to your **"Private/Home"** subnet, as well as Internet over VPN.
+However you can be desired to share internet over VPN with specific, Guest Clients and restrict access to your **"Private/Home"** subnet. For this scenario [Openvpn-Server's](https://github.com/d3vilh/openvpn-server) `server.conf` configuration file has special `route 10.0.71.0/24` option, aka **"Guest users"** subnet.
 
-To assign desired subnet policy to the specific client, you have to define static IP address for this client after you generate .OVPN profile.
+<p align="center">
+<img src="https://github.com/d3vilh/raspberry-gateway/blob/master/images/OVPN_VLANs.png" alt="OpenVPN Subnets" width="700" border="1" />
+</p>
+
+To assign desired subnet policy to the specific client, you have to define static IP address for the client during its profile/Certificate creation.
+To do that, just enter `"Static IP (optional)"` field in `"Certificates"` page and press `"Create"` button.
 
 > Keep in mind, by default, all the clients have full access, so you don't need to specifically configure static IP for your own devices, your home devices always will land to **"Trusted"** subnet by default. 
 
 ### CLI ways to deal with OpenVPN Server configuration
 
-To generate new .OVPN profile execute following command. Password as second argument is optional:
+To **generate** new .OVPN profile execute following command. Password as second argument is optional:
 ```shell
 sudo docker exec openvpn bash /opt/app/bin/genclient.sh <name> <IP> <?password?>
 ```
 
 You can find you .ovpn file under `/openvpn/clients/<name>.ovpn`, make sure to check and modify the `remote ip-address`, `port` and `protocol`. It also will appear in `"Certificates"` menue of OpenVPN WEB UI.
 
-Revoking of old .OVPN files can be done via CLI by running following:
+**Revoking** of old .OVPN files can be done via CLI by running following:
 
 ```shell
 sudo docker exec openvpn bash /opt/app/bin/revoke.sh <clientname>
 ```
 
-Removing of old .OVPN files can be done via CLI by running following:
+**Removing** of old .OVPN files can be done via CLI by running following:
 
 ```shell
 sudo docker exec openvpn bash /opt/app/bin/rmcert.sh <clientname>
@@ -293,7 +317,7 @@ sudo docker exec openvpn bash /opt/app/bin/rmcert.sh <clientname>
 
 Restart of OpenVPN container can be done via the CLI by running following:
 ```shell
-sudo docker-compose restart openvpn
+sudo docker restart openvpn
 ```
 
 To define static IP, go to `~/openvpn/staticclients` directory and create text file with the name of your client and insert into this file ifrconfig-push option with the desired static IP and mask: `ifconfig-push 10.0.71.2 255.255.255.0`.
