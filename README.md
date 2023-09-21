@@ -14,7 +14,7 @@ Fast Docker container with OpenVPN Server living inside.
 ```shell
 git clone https://github.com/d3vilh/openvpn-server
 ```
-> **Note**: Before deploying container check [Configuration](https://github.com/d3vilh/openvpn-server#configuration) section for setting all the required variables up.
+> **Note**: Before deploying container check [Deployment Details](https://github.com/d3vilh/openvpn-server#container-deployment-details) section for setting all the required variables up.
 2. Build the image:
 ```shell
 cd openvpn-server
@@ -22,7 +22,7 @@ docker compose up -d
 ```
 3. That's it. It seems you have your own openvpn-server running on your machine.
 
-4. For easy OpenVPN Server management install [OpenVPN-UI](https://github.com/d3vilh/openvpn-ui).
+For easy OpenVPN Server management install [OpenVPN-UI](https://github.com/d3vilh/openvpn-ui).
 
 ## Container deployment details
 
