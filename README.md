@@ -61,6 +61,7 @@ services:
 * `GUEST_SUB` is Gusets subnet for clients with internet access only
 * `HOME_SUB` is subnet where the VPN server is located, thru which you get internet access to the clients with MASQUERADE
 * `fw-rules.sh` is bash file with additional firewall rules you would like to apply during container start
+* `checkpsw.sh` is a dummy bash script to use with `auth-user-pass-verify` option in `server.conf` file. It is used to check user credentials against some external passwords DB, like LDAP or oath, or MySQL. If you don't need this option, just leave it as is.
 
 `docker_entrypoint.sh` will apply following Firewall rules:
 ```shell

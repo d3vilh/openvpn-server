@@ -21,6 +21,7 @@ services:
            - ./staticclients:/etc/openvpn/staticclients
            - ./log:/var/log/openvpn
            - ./fw-rules.sh:/opt/app/fw-rules.sh
+           - ./checkpsw.sh:/opt/app/checkpsw.sh
        cap_add:
            - NET_ADMIN
        restart: always
