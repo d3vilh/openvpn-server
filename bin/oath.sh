@@ -13,8 +13,6 @@ LOG_FILE=/var/log/openvpn/oath.log
 
 echo -e "$(date) Openvpn dir: $OPENVPN_DIR\nOath secrets: $OATH_SECRETS\nLog file: $LOG_FILE\nPassfile: $PASSFILE\n" | tee -a $LOG_FILE
 
-echo "$(date) - PASSFILE: $PASSFILE" | tee -a $LOG_FILE #cat $PASSFILE >> $LOG_FILE
-
 # Geting user and password passed by external user to OpenVPN server tmp file
 user=$(head -1 $PASSFILE)
 pass=$(tail -1 $PASSFILE) 
