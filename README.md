@@ -5,8 +5,10 @@ Fast Docker container with OpenVPN Server living inside.
 
 [![latest version](https://img.shields.io/github/v/release/d3vilh/openvpn-ui?color=%2344cc11&label=OpenVPN%20UI&style=flat-square&logo=Github)](https://github.com/d3vilh/openvpn-ui) [![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/d3vilh/openvpn-ui/latest?logo=docker&label=OpenVPN%20UI%20IMAGE&color=2344cc11&style=flat-square&logoColor=white)](https://hub.docker.com/r/d3vilh/openvpn-ui) 
 
-## Important change in `v.0.3` release
-Default OpenVPN server configuration directory changed from `./openvpn` to `./openvpn-server`. You can easy move all your configuration with `sudo mv openvpn openvpn-server` command.
+## Important change in `v.0.4` release
+* Default Cipher for Server and Client configs is changed to `AES-256-GCM`
+* **`ncp-ciphers`** option has been depricated and replaced with **`data-ciphers`**
+* 2FA support has been added
 
 ## Run this image
 
