@@ -5,8 +5,10 @@ Fast Docker container with OpenVPN Server living inside.
 
 [![latest version](https://img.shields.io/github/v/release/d3vilh/openvpn-ui?color=%2344cc11&label=OpenVPN%20UI&style=flat-square&logo=Github)](https://github.com/d3vilh/openvpn-ui) [![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/d3vilh/openvpn-ui/latest?logo=docker&label=OpenVPN%20UI%20IMAGE&color=2344cc11&style=flat-square&logoColor=white)](https://hub.docker.com/r/d3vilh/openvpn-ui) 
 
-## Important change in `v.0.3` release
-Default OpenVPN server configuration directory changed from `./openvpn` to `./openvpn-server`. You can easy move all your configuration with `sudo mv openvpn openvpn-server` command.
+## Important change in `v.0.4` release
+* Default Cipher for Server and Client configs is changed to `AES-256-GCM`
+* **`ncp-ciphers`** option has been depricated and replaced with **`data-ciphers`**
+* 2FA support has been added
 
 ## Run this image
 
@@ -61,6 +63,7 @@ services:
 * `GUEST_SUB` is Gusets subnet for clients with internet access only
 * `HOME_SUB` is subnet where the VPN server is located, thru which you get internet access to the clients with MASQUERADE
 * `fw-rules.sh` is bash file with additional firewall rules you would like to apply during container start
+* `checkpsw.sh` is a dummy bash script to use with `auth-user-pass-verify` option in `server.conf` file. It is used to check user credentials against some external passwords DB, like LDAP or oath, or MySQL. If you don't need this option, just leave it as is.
 
 `docker_entrypoint.sh` will apply following Firewall rules:
 ```shell
