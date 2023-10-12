@@ -3,7 +3,6 @@
 # d3vilh/openvpn-server drafted 2FA support
 #
 # MFA verification by OpenVPN server using oath-tool
-echo "string oath.sh"
 
 # VARIABLES
 PASSFILE=$1    # Password file passed by openvpn-server with "auth-user-pass-verify /opt/app/bin/oath.sh via-file" in server.conf
@@ -11,13 +10,13 @@ OPENVPN_DIR=/etc/openvpn
 OATH_SECRETS=$OPENVPN_DIR/clients/oath.secrets
 LOG_FILE=/var/log/openvpn/oath.log
 
-echo -e "$(date) Openvpn dir: $OPENVPN_DIR\nOath secrets: $OATH_SECRETS\nLog file: $LOG_FILE\nPassfile: $PASSFILE\n" | tee -a $LOG_FILE
+#echo -e "$(date) Openvpn dir: $OPENVPN_DIR\nOath secrets: $OATH_SECRETS\nLog file: $LOG_FILE\nPassfile: $PASSFILE\n" | tee -a $LOG_FILE
 
 # Geting user and password passed by external user to OpenVPN server tmp file
 user=$(head -1 $PASSFILE)
 pass=$(tail -1 $PASSFILE) 
 
-echo "$(date) - Authentication attempt for user $user" | tee -a $LOG_FILE # echo "$(date) - Password: $pass" | tee -a $LOG_FILE
+echo "$(date) - 2FA authentication attempt for user $user" | tee -a $LOG_FILE # echo "$(date) - Password: $pass" | tee -a $LOG_FILE
 
 # Parsing oath.secrets to getting secret entry, ignore case
 secret=$(grep -i -m 1 "$user:" $OATH_SECRETS | cut -d: -f2) # echo "$(date) - Secret: $secret" | tee -a $LOG_FILE
@@ -34,5 +33,5 @@ echo "FAIL"
 fi
 
 # If we make it here, auth hasn't succeeded, don't grant access
-echo "$(date) - Authentication failed for user $user" | tee -a $LOG_FILE
+echo "$(date) - 2FA authentication failed for user $user" | tee -a $LOG_FILE
 exit 1
