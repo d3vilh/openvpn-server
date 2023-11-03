@@ -10,6 +10,9 @@ Fast Docker container with OpenVPN Server living inside.
 * **`ncp-ciphers`** option has been depricated and replaced with **`data-ciphers`**
 * 2FA support has been added
 
+## Automated installation
+Consider to use [openvpn-aws](https://github.com/d3vilh/openvpn-aws) as automated installation solution. It will deploy OpenVPN Server on any x86 server or Cloud instance with all the required configuration and OpenVPN UI for easy management.
+
 ## Run this image
 
 ### Run image using a `docker-compose.yml` file
@@ -84,7 +87,7 @@ iptables -A FORWARD -d 10.0.70.77 -s 10.0.70.88 -j DROP
 
 <img src="https://github.com/d3vilh/raspberry-gateway/raw/master/images/OVPN_VLANs.png" alt="OpenVPN Subnets" width="700" border="1" />
 
-Optionally you can add [OpenVPN WEB UI](https://github.com/d3vilh/openvpn-ui) container for managing server via GUI:
+Optionally you can add [OpenVPN UI](https://github.com/d3vilh/openvpn-ui) container for managing server via GUI:
 ```yaml
     openvpn-ui:
        container_name: openvpn-ui
@@ -306,7 +309,7 @@ To **generate** new .OVPN profile execute following command. Password as second 
 sudo docker exec openvpn bash /opt/app/bin/genclient.sh <name> <IP> <?password?>
 ```
 
-You can find you .ovpn file under `/openvpn/clients/<name>.ovpn`, make sure to check and modify the `remote ip-address`, `port` and `protocol`. It also will appear in `"Certificates"` menue of OpenVPN WEB UI.
+You can find you .ovpn file under `/openvpn/clients/<name>.ovpn`, make sure to check and modify the `remote ip-address`, `port` and `protocol`. It also will appear in `"Certificates"` menue of OpenVPN UI.
 
 **Revoking** of old .OVPN files can be done via CLI by running following:
 
