@@ -10,6 +10,9 @@ Fast Docker container with OpenVPN Server living inside.
 * **`ncp-ciphers`** option has been depricated and replaced with **`data-ciphers`**
 * 2FA support has been added
 
+## Automated installation
+Consider to use [openvpn-aws](https://github.com/d3vilh/openvpn-aws) as automated installation solution. It will deploy OpenVPN Server on any x86 server with all the required configuration and OpenVPN UI for easy management.
+
 ## Run this image
 
 ### Run image using a `docker-compose.yml` file
