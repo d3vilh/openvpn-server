@@ -20,7 +20,7 @@ if [[ ! -f $OPENVPN_DIR/pki/ca.crt ]]; then
 
     # Listing env parameters:
     echo "Following EASYRSA variables will be used:"
-    cat $EASY_RSA/pki/vars | awk '{$1=""; print $0}';
+    cat $OPENVPN_DIR/pki/vars | awk '{$1=""; print $0}';
 
     echo 'Generating ertificate authority...'
     $EASY_RSA/easyrsa build-ca nopass
@@ -51,7 +51,7 @@ fi
 
 # Listing env parameters:
 echo "Following EASYRSA variables were set during CA init:"
-cat $EASY_RSA/pki/vars | awk '{$1=""; print $0}';
+cat $OPENVPN_DIR/pki/vars | awk '{$1=""; print $0}';
 
 # Configure network
 mkdir -p /dev/net
