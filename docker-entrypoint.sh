@@ -1,5 +1,5 @@
 #!/bin/bash
-#VERSION 0.2 by @d3vilh@github.com aka Mr. Philipp
+#VERSION 0.2.1 by @d3vilh@github.com aka Mr. Philipp
 set -e
 
 #Variables
@@ -20,7 +20,7 @@ if [[ ! -f $OPENVPN_DIR/pki/ca.crt ]]; then
 
     # Listing env parameters:
     echo "Following EASYRSA variables will be used:"
-    cat $OPENVPN_DIR/pki/vars | awk '{$1=""; print $0}';
+    cat $EASY_RSA/pki/vars | awk '{$1=""; print $0}';
 
     echo 'Generating ertificate authority...'
     $EASY_RSA/easyrsa build-ca nopass
