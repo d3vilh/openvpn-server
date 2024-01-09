@@ -102,7 +102,7 @@ Optionally you can add [OpenVPN UI](https://github.com/d3vilh/openvpn-ui) contai
            - "8080:8080/tcp"
        volumes:
            - ./:/etc/openvpn
-           - ./db:/opt/openvpn-gui/db
+           - ./db:/opt/openvpn-ui/db
            - ./pki:/usr/share/easy-rsa/pki
        restart: always
 ```
@@ -153,7 +153,7 @@ docker run  --interactive --tty --rm \
 ```
 docker run \
 -v /home/pi/openvpn-server:/etc/openvpn \
--v /home/pi/openvpn-server/db:/opt/openvpn-gui/db \
+-v /home/pi/openvpn-server/db:/opt/openvpn-ui/db \
 -v /home/pi/openvpn-server/pki:/usr/share/easy-rsa/pki \
 -e OPENVPN_ADMIN_USERNAME='admin' \
 -e OPENVPN_ADMIN_PASSWORD='gagaZush' \
