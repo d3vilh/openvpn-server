@@ -23,6 +23,7 @@ services:
            - ./log:/var/log/openvpn
            - ./fw-rules.sh:/opt/app/fw-rules.sh
            - ./checkpsw.sh:/opt/app/checkpsw.sh
+           - ./server.conf:/etc/openvpn/server.conf
        cap_add:
            - NET_ADMIN
        restart: always
