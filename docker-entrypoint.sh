@@ -1,5 +1,5 @@
 #!/bin/bash
-#VERSION 0.2.1 by @d3vilh@github.com aka Mr. Philipp
+#VERSION 0.2.2 by @d3vilh@github.com aka Mr. Philipp
 set -e
 
 #Variables
@@ -89,4 +89,4 @@ echo 'IPT FWD Chains:'
 iptables -v -x -n -L | grep DROP 
 
 echo 'Start openvpn process...'
-/usr/sbin/openvpn --cd $OPENVPN_DIR --script-security 2 --config $OPENVPN_DIR/config/server.conf
+/usr/sbin/openvpn --cd $OPENVPN_DIR --script-security 2 --config $OPENVPN_DIR/server.conf

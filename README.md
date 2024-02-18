@@ -185,19 +185,19 @@ This setup use `tun` mode, as the most compatible with wide range of devices, fo
 
 The topology used is `subnet`, for the same reasons. `p2p`, for instance, does not work on Windows.
 
-The server config [specifies](https://github.com/d3vilh/openvpn-aws/blob/master/openvpn/config/server.conf#L34) `push redirect-gateway def1 bypass-dhcp`, meaning that after establishing the VPN connection, all traffic will go through the VPN. This might cause problems if you use local DNS recursors which are not directly reachable, since you will try to reach them through the VPN and they might not answer to you. If that happens, use public DNS resolvers like those of OpenDNS (`208.67.222.222` and `208.67.220.220`) or Google (`8.8.4.4` and `8.8.8.8`).
+The server config [specifies](https://github.com/d3vilh/openvpn-aws/blob/master/openvpn/server.conf#L34) `push redirect-gateway def1 bypass-dhcp`, meaning that after establishing the VPN connection, all traffic will go through the VPN. This might cause problems if you use local DNS recursors which are not directly reachable, since you will try to reach them through the VPN and they might not answer to you. If that happens, use public DNS resolvers like those of OpenDNS (`208.67.222.222` and `208.67.220.220`) or Google (`8.8.4.4` and `8.8.8.8`).
 
 ### OpenVPN Server Pstree structure
 
 All the Server and Client configuration located in mounted Docker volume and can be easely tuned. Here is the tree structure:
 
 ```shell
+|-- server.conf  // OpenVPN Server configuration file
 |-- clients
 |   |-- your_client1.ovpn
 |-- config
 |   |-- client.conf
 |   |-- easy-rsa.vars
-|   |-- server.conf
 |-- db
 |   |-- data.db //Optional OpenVPN UI DB
 |-- log
