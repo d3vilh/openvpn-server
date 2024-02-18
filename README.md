@@ -192,12 +192,12 @@ The server config [specifies](https://github.com/d3vilh/openvpn-aws/blob/master/
 All the Server and Client configuration located in mounted Docker volume and can be easely tuned. Here is the tree structure:
 
 ```shell
+|-- server.conf  // OpenVPN Server configuration file
 |-- clients
 |   |-- your_client1.ovpn
 |-- config
 |   |-- client.conf
 |   |-- easy-rsa.vars
-|   |-- server.conf
 |-- db
 |   |-- data.db //Optional OpenVPN UI DB
 |-- log
