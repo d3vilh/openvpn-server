@@ -61,6 +61,7 @@ services:
            - ./staticclients:/etc/openvpn/staticclients
            - ./log:/var/log/openvpn
            - ./fw-rules.sh:/opt/app/fw-rules.sh
+           - ./server.conf:/etc/openvpn/server.conf
        cap_add:
            - NET_ADMIN
        restart: always
@@ -149,6 +150,7 @@ docker run  --interactive --tty --rm \
   -v ./staticclients:/etc/openvpn/staticclients \
   -v ./log:/var/log/openvpn \
   -v ./fw-rules.sh:/opt/app/fw-rules.sh \
+  -v ./server.conf:/etc/openvpn/server.conf \
   --privileged d3vilh/openvpn-server:latest
 ```
 
