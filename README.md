@@ -7,6 +7,9 @@ Fast Docker container with OpenVPN Server living inside.
 
 ## Important changes
 
+### Release `v.0.5.1`
+* Default OpenVPN Server configuration file has been moved from `/etc/openvpn/config` to `/etc/openvpn` directory.
+
 ### Release `v.0.4`
 * Default Cipher for Server and Client configs is changed to `AES-256-GCM`
 * **`ncp-ciphers`** option has been depricated and replaced with **`data-ciphers`**
