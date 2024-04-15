@@ -1,7 +1,7 @@
 # Start from Alpine base image
 FROM alpine
 LABEL maintainer="Mr.Philipp <d3vilh@github.com>"
-LABEL version="0.5.1"
+LABEL version="0.5.2"
 
 # Set the working directory to /opt/app
 WORKDIR /opt/app
