@@ -46,15 +46,18 @@ version: "3.5"
 services:
     openvpn:
        container_name: openvpn
+       # If you want to build your own image with docker-compose, uncomment the next line, comment the "image:" line and run "docker-compose build" following by "docker-compose up -d"
+       # build: .
        image: d3vilh/openvpn-server:latest
        privileged: true
        ports: 
           - "1194:1194/udp"   # openvpn UDP port
          # - "1194:1194/tcp"   # openvpn TCP port
+         # - "2080:2080/tcp"  # management port. uncomment if you would like to share it with the host
        environment:
-           TRUST_SUB: 10.0.70.0/24
-           GUEST_SUB: 10.0.71.0/24
-           HOME_SUB: 192.168.88.0/24
+           TRUST_SUB: "10.0.70.0/24"
+           GUEST_SUB: "10.0.71.0/24"  
+           HOME_SUB: "192.168.88.0/24"
        volumes:
            - ./pki:/etc/openvpn/pki
            - ./clients:/etc/openvpn/clients
@@ -62,10 +65,30 @@ services:
            - ./staticclients:/etc/openvpn/staticclients
            - ./log:/var/log/openvpn
            - ./fw-rules.sh:/opt/app/fw-rules.sh
+           - ./checkpsw.sh:/opt/app/checkpsw.sh
            - ./server.conf:/etc/openvpn/server.conf
        cap_add:
            - NET_ADMIN
        restart: always
+       depends_on:
+           - "openvpn-ui"
+
+    openvpn-ui:
+       container_name: openvpn-ui
+       image: d3vilh/openvpn-ui:latest
+       environment:
+           - OPENVPN_ADMIN_USERNAME=admin
+           - OPENVPN_ADMIN_PASSWORD=gagaZush
+       privileged: true
+       ports:
+           - "8080:8080/tcp"
+       volumes:
+           - ./:/etc/openvpn
+           - ./db:/opt/openvpn-ui/db
+           - ./pki:/usr/share/easy-rsa/pki
+           - /var/run/docker.sock:/var/run/docker.sock:ro
+       restart: always
+
 ``` 
 
 **Where:** 
@@ -94,25 +117,7 @@ iptables -A FORWARD -d 10.0.70.77 -s 10.0.70.88 -j DROP
 
 <img src="https://github.com/d3vilh/raspberry-gateway/raw/master/images/OVPN_VLANs.png" alt="OpenVPN Subnets" width="700" border="1" />
 
-Optionally you can add [OpenVPN UI](https://github.com/d3vilh/openvpn-ui) container for managing server via GUI:
-```yaml
-    openvpn-ui:
-       container_name: openvpn-ui
-       image: d3vilh/openvpn-ui:latest
-       environment:
-           - OPENVPN_ADMIN_USERNAME=admin
-           - OPENVPN_ADMIN_PASSWORD=gagaZush
-       privileged: true
-       ports:
-           - "8080:8080/tcp"
-       volumes:
-           - ./:/etc/openvpn
-           - ./db:/opt/openvpn-ui/db
-           - ./pki:/usr/share/easy-rsa/pki
-       restart: always
-```
-
-Check attached `docker-compose-openvpnui.yml` file for openvpn-server & openvpn-ui tandem configuration.
+Check attached `docker-compose-no-ui.yml` file to run openvpn-server withput [OpenVPN UI](https://github.com/d3vilh/openvpn-ui) container.
 
 **Default EasyRSA** configuration can be changed in `~/openvpn-server/config/easy-rsa.vars` file:
 
