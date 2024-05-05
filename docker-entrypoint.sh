@@ -61,7 +61,10 @@ fi
 
 echo 'Configuring networking rules...'
 if ! grep -q 'net.ipv4.ip_forward=1' /etc/sysctl.conf; then
-  echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf
+  echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf; 
+  echo 'IP forwarding configuration now applied:'
+else
+  echo 'IP forwarding configuration already applied:'
 fi
 sysctl -p /etc/sysctl.conf
 
