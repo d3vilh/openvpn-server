@@ -1,5 +1,5 @@
 #!/bin/bash
-#VERSION 0.2.2 by @d3vilh@github.com aka Mr. Philipp
+#VERSION 0.2.3 by @d3vilh@github.com aka Mr. Philipp
 set -e
 
 #Variables
@@ -60,7 +60,9 @@ if [ ! -c /dev/net/tun ]; then
 fi
 
 echo 'Configuring networking rules...'
-echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf
+if ! grep -q 'net.ipv4.ip_forward=1' /etc/sysctl.conf; then
+  echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf
+fi
 sysctl -p /etc/sysctl.conf
 
 echo 'Configuring iptables...'
